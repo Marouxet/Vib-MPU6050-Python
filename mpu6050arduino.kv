@@ -1,0 +1,181 @@
+<Inicio>:
+    
+    graph_wf: graph_wf
+    graph_sp: graph_sp
+    boton_on_libre: boton_on_libre
+    boton_on_forzado: boton_on_forzado
+    slider: slider
+    boton_velocidad: boton_velocidad
+    resetear : resetear
+    exportar: exportar
+    corregir: corregir
+    boton_conectar : boton_conectar
+    texto_usuario: texto_usuario
+    subir_velocidad : subir_velocidad
+    bajar_velocidad : bajar_velocidad
+    guardar_maximo: guardar_maximo
+    calcular_parametros: calcular_parametros
+    texto_masa : texto_masa
+
+    BoxLayout:
+
+        
+        orientation: "horizontal"
+        size: root.width, root.height
+
+        BoxLayout:
+            orientation: "vertical"
+            size_hint: (0.7, 0.9)
+            pos_hint:{"center":0,"center_y":0.5}
+
+            Graph:
+                id: graph_wf
+                xlabel: "Tiempo [s]"
+                ylabel: "Aceleración [g]"
+                border_color:1,1,1,0.95
+                label_options: {'color': (1,1,1,1)}
+                xmin: 0
+                xmax: root.t_max
+                ymin:-0.5
+                ymax: 0.5
+                padding:10
+                x_grid:True
+                x_grid_label : True
+                y_grid:True
+                y_grid_label : True
+                x_ticks_minor:1
+                x_ticks_major:root.t_max/10
+                y_ticks_minor:1
+                y_ticks_major:0.1
+                tick_color: 1,1,1,0.5
+                
+            Graph:
+                id: graph_sp
+                border_color:1,1,1,0.95
+                label_options: {'color': (1,1,1,1)}
+                xlabel: "Frecuencia [Hz]"
+                ylabel: "Aceleración [No Calibrado]"
+                xmin: 0
+                xmax: 100*(root.sampleRate/2)/root.fftSize
+                ymin: 0
+                ymax: 3000
+                padding:10
+                x_grid:True
+                x_grid_label : True
+                y_grid:True
+                y_grid_label : True
+                x_ticks_minor:1
+                x_ticks_major:1
+                y_ticks_minor:1
+                y_ticks_major:200
+                tick_color: 1,1,1,0.5
+
+        BoxLayout:
+            size_hint: (0.05, 0.8)
+
+        BoxLayout:
+            orientation: "vertical"   
+            size_hint: (0.15, 0.8)
+            pos_hint:{"center":0,"center_y":0.5}
+            border: (0,0,0,0.5)
+
+            Label:
+                id: texto_usuario
+                text: ""
+                font_size:'14sp'
+                
+
+            Button:
+                id: boton_conectar
+                text: "Conectar"
+                on_press: root.conectar()
+
+            Button: 
+                id: boton_on_libre
+                text: "Estudio Libre"
+                on_press: root.pressedLibre()
+                disabled: True
+
+            Button: 
+                id: corregir
+                text: "Corregir Gráfico"
+                on_press: root.cambiarOrdenBits()
+                disabled: True
+
+            Button: 
+                id: resetear
+                text: "Resetear Gráfico"
+                on_press: root.resetearWF()
+                disabled: True
+            Button: 
+                id: exportar
+                text: "Exportar Ahora"
+                on_press: root.exportCSV() 
+                disabled: True
+
+            Button: 
+                id: boton_on_forzado    
+                text: "Estudio Forzado"
+                on_press: root.pressedForzado()
+                disabled: True
+
+            Slider:
+                id: slider
+                min: 80
+                max: 180
+                step: 5
+                orientation: 'horizontal'
+                
+            Label:
+                text: str(slider.value)
+            Button: 
+                id: boton_velocidad
+                text: "Cambiar Velocidad"
+                on_press: root.cambiarVelocidad()
+                disabled: True
+
+            BoxLayout:
+                orientation: "horizontal"
+                size: root.width, root.height
+
+                Button: 
+                    id: bajar_velocidad
+                    text: "-"
+                    on_press: root.velocidadBajar()
+                    disabled: True
+
+                Button: 
+                    id: subir_velocidad
+                    text: "+"
+                    on_press: root.velocidadSubir()
+                    disabled: True
+
+            Button: 
+                id: guardar_maximo
+                text: "Toma Punto"
+                on_press: root.guardarMaximo()
+                disabled: False
+            Label:
+                text: "Masa del sistema"      
+                font_size:'14sp'      
+            BoxLayout:
+                orientation: "horizontal"
+                size: root.width, root.height
+
+                TextInput:
+                    id : texto_masa
+                    text : "0.5"
+                    halign : 'center'
+                Label:
+                    text: "[kg]"
+            Button: 
+                id: calcular_parametros
+                text: "Calcular Parámetros"
+                font_size: "12sp"
+                on_press: root.calcularParam()
+                disabled: True
+
+                
+            
+                
+                

@@ -85,12 +85,14 @@ class Inicio(Widget):
 
 
     def conectar(self):
+       
         self.texto_usuario.text = ""
         if not self.conectado:
 
             # Defino parámetros para el objeto Serial
-            
-            portName = '/dev/ttyACM0'
+            # Leo variable de ambiente con el nombre del puerto
+            portName = os.environ['ARDUINO_UNTREF']
+            #portName = '/dev/cu.usbmodem101'
             baudRate = 115200
             dataNumBytes = 2        # number of bytes of 1 data point
             numPlots = 3            # number of plots in 1 graph
